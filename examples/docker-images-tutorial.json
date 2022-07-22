@@ -1,0 +1,12 @@
+{
+    "name": "Docker Images Tutorial",
+    "prerequisites": [
+        {
+            "name": "docker",
+            "path": "/var/docker",
+            "version": "1.0.6",
+            "alternative": "nerdctl"
+        }
+    ],
+    "steps": []
+}
