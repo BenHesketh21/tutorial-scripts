@@ -21,9 +21,9 @@ type Prerequisite struct {
 }
 
 type Step struct {
-	BeforeCommandMessage string `json:"beforeCommandMessage"`
-	Command              string `json:"command"`
-	AfterCommandMessage  string `json"afterCommandMessage"`
+	BeforeMessage string `json:"beforeMessage"`
+	Command       string `json:"command"`
+	AfterMessage  string `json:"afterMessage"`
 }
 
 type Tutorial struct {
@@ -60,7 +60,7 @@ func DoesAlternativePrerequisiteExist(tutorial Tutorial, alternative string) (bo
 func waiter() {
 	i := 0
 	for {
-		log.Debug(i)
+		log.Trace(i)
 		time.Sleep(time.Second * 1)
 		if i == 5 {
 			fmt.Print(" (Press <Enter> to execute command)")
@@ -71,7 +71,7 @@ func waiter() {
 }
 
 func ExecuteStep(step Step, stepNumber int) {
-	color.Magenta(fmt.Sprint(stepNumber) + ": " + step.BeforeCommandMessage)
+	color.Magenta(fmt.Sprint(stepNumber) + ": " + step.BeforeMessage)
 	fmt.Println("")
 	fmt.Println("")
 	typing.SimulateType(step.Command, 50)
@@ -86,7 +86,7 @@ func ExecuteStep(step Step, stepNumber int) {
 	time.Sleep(time.Second * 1)
 	fmt.Println("")
 	fmt.Println("")
-	color.Red(step.AfterCommandMessage)
+	color.Red(step.AfterMessage)
 	fmt.Println("")
 	fmt.Println("")
 	fmt.Println("")

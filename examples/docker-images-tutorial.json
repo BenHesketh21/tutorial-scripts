@@ -16,19 +16,19 @@
     ],
     "steps": [
         {
-            "beforeCommandMessage": "Let's see what images we have on our host.",
+            "beforeMessage": "Let's see what images we have on our host.",
             "command": "nerdctl images",
-            "afterCommandMessage": "You can see all your container images listed here"
+            "afterMessage": "You can see all your container images listed here"
         },
         {
-            "beforeCommandMessage": "Now let's see some running containers.",
+            "beforeMessage": "Now let's see some running containers.",
             "command": "nerdctl ps",
-            "afterCommandMessage": "You can see all your running containers listed here"
+            "afterMessage": "You can see all your running containers listed here"
         },
         {
-            "beforeCommandMessage": "To see all containers let's add -a",
+            "beforeMessage": "To see all containers let's add -a",
             "command": "nerdctl ps -a",
-            "afterCommandMessage": "This command includes non-running containers."
+            "afterMessage": "This command includes non-running containers."
         }
     ]
 }
