@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/BenHesketh21/tutorial-scripts/pkg/logger"
+	log "github.com/sirupsen/logrus"
 )
 
 func SimulateType(message string, speed float64) {
@@ -13,10 +13,10 @@ func SimulateType(message string, speed float64) {
 		interval := fmt.Sprintf("%f", 60/float64(speed*60)) + "s"
 		timeInterval, err := time.ParseDuration(interval)
 		if err != nil {
-			logger.Error.Fatal(err)
+			log.Fatal(err)
 		}
 		//fmt.Print(interval, timeInterval.Seconds(), time.Second*time.Duration(timeInterval.Seconds()))
 		time.Sleep(time.Nanosecond * time.Duration(timeInterval))
 	}
-	fmt.Println("")
+	time.Sleep(time.Millisecond * 500)
 }
