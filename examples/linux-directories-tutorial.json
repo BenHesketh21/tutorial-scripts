@@ -1,0 +1,33 @@
+{
+    "name": "Bash Directories",
+    "prerequisites": [
+    ],
+    "steps": [
+        {
+            "beforeMessage": "Let's see what folders we have.",
+            "command": "ls",
+            "afterMessage": "You can see all files and folders found in ${PWD}",
+            "shellPrompt": "mysql>"
+        },
+        {
+            "beforeMessage": "Now let's see some more detail.",
+            "command": "ls -al",
+            "afterMessage": "Now you can see the same files and folders but with permissions, sizes etc."
+        },
+        {
+            "beforeMessage": "Let's make a new folder",
+            "command": "mkdir test-folder",
+            "afterMessage": "This command will create a new folder"
+        },
+        {
+            "beforeMessage": "Let's see our new folder",
+            "command": "ls",
+            "afterMessage": "This command will show us out current folder"
+        },
+        {
+            "beforeMessage": "Let's clean up",
+            "command": "rm -rf test-folder",
+            "afterMessage": "This command will delete our test-folder"
+        }
+    ]
+}
