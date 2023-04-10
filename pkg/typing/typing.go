@@ -7,7 +7,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func SimulateType(message string, speed float64) {
+func SimulateType(message string, shellPrompt string, speed float64) {
+	if shellPrompt == "" {
+		shellPrompt = "$"
+	}
+	fmt.Print(shellPrompt + " ")
 	for i := range message {
 		fmt.Print(string(message[i]))
 		interval := fmt.Sprintf("%f", 60/float64(speed*60)) + "s"

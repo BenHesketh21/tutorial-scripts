@@ -24,6 +24,7 @@ type Step struct {
 	BeforeMessage string `json:"beforeMessage"`
 	Command       string `json:"command"`
 	AfterMessage  string `json:"afterMessage"`
+	ShellPrompt   string `json:"shellPrompt"`
 }
 
 type Tutorial struct {
@@ -57,26 +58,36 @@ func DoesAlternativePrerequisiteExist(tutorial Tutorial, alternative string) (bo
 	return false, 0, nil
 }
 
-func waiter() {
+func waiter(quitWait <-chan bool) {
 	i := 0
 	for {
-		log.Trace(i)
-		time.Sleep(time.Second * 1)
-		if i == 5 {
-			fmt.Print(" (Press <Enter> to execute command)")
+		select {
+		case <-quitWait:
 			return
+		default:
+			log.Trace(i)
+			time.Sleep(time.Second * 1)
+			if i == 5 {
+				fmt.Print(" (Press <Enter> to execute command)")
+				<-quitWait
+				return
+			}
+			i++
 		}
-		i++
 	}
 }
 
+func prettyLog(msg string, colorToPrint func(string, ...interface{})) {
+	colorToPrint("\n" + msg + "\n")
+}
+
 func ExecuteStep(step Step, stepNumber int) {
-	color.Magenta(fmt.Sprint(stepNumber) + ": " + step.BeforeMessage)
-	fmt.Println("")
-	fmt.Println("")
-	typing.SimulateType(step.Command, 50)
-	go waiter()
+	prettyLog(fmt.Sprint(stepNumber)+": "+step.BeforeMessage, color.Magenta)
+	typing.SimulateType(step.Command, step.ShellPrompt, 10)
+	quitWait := make(chan bool)
+	go waiter(quitWait)
 	fmt.Scanln()
+	quitWait <- true
 	cmd := exec.Command("bash", "-c", step.Command)
 	output, err := cmd.Output()
 	if err != nil {
@@ -84,11 +95,6 @@ func ExecuteStep(step Step, stepNumber int) {
 	}
 	fmt.Print(string(output))
 	time.Sleep(time.Second * 1)
-	fmt.Println("")
-	fmt.Println("")
-	color.Red(step.AfterMessage)
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("")
+	prettyLog(step.AfterMessage, color.Red)
 	time.Sleep(time.Second * 1)
 }
